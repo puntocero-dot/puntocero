@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Code, Database, Globe, Lock, MonitorSmartphone, Server, Zap } from 'lucide-react';
