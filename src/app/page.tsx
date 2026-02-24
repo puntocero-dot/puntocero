@@ -251,6 +251,86 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Projects Section */}
+      <section id="proyectos" className="py-20">
+        <div className="container mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Nuestros Proyectos</h2>
+            <p className="mt-4 text-lg text-muted-foreground">
+              Soluciones reales que generan impacto en distintas industrias
+            </p>
+          </div>
+          <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              { name: "Logitrack", desc: "Rastreo y optimización de flotas con IA", color: "bg-red-500/10", textColor: "text-red-500" },
+              { name: "ContaPro", desc: "Software contable en la nube para PYMEs", color: "bg-purple-500/10", textColor: "text-purple-500" },
+              { name: "Maps", desc: "Servicio de mapas y geolocalización", color: "bg-blue-500/10", textColor: "text-blue-500" },
+              { name: "DrPollitoApp", desc: "App de gestión para restaurantes", color: "bg-amber-500/10", textColor: "text-amber-500" },
+              { name: "TheYellowExpress", desc: "Sistema de logística y entregas", color: "bg-yellow-500/10", textColor: "text-yellow-500" },
+              { name: "Armados2Go", desc: "Plataforma de ensamblaje bajo demanda", color: "bg-emerald-500/10", textColor: "text-emerald-500" },
+            ].map((proj) => (
+              <div key={proj.name} className="rounded-xl border border-border bg-card p-6 transition-all hover:shadow-md">
+                <div className={`mb-3 inline-flex rounded-lg ${proj.color} px-3 py-1`}>
+                  <span className={`text-sm font-semibold ${proj.textColor}`}>{proj.name}</span>
+                </div>
+                <p className="text-sm text-muted-foreground">{proj.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Process Section */}
+      <section id="proceso" className="py-20 bg-card/50">
+        <div className="container mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Nuestro Proceso</h2>
+            <p className="mt-4 text-lg text-muted-foreground">
+              Metodología ágil y transparente de principio a fin
+            </p>
+          </div>
+          <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              { step: "01", title: "Descubrimiento", desc: "Entendemos tu negocio, objetivos y usuarios para definir el alcance del proyecto." },
+              { step: "02", title: "Diseño", desc: "Creamos wireframes y prototipos interactivos validados contigo antes de escribir código." },
+              { step: "03", title: "Desarrollo", desc: "Sprints de 2 semanas con entregas incrementales y revisiones constantes." },
+              { step: "04", title: "Lanzamiento", desc: "Deploy, monitoreo y soporte continuo para asegurar el éxito de tu producto." },
+            ].map((item) => (
+              <div key={item.step} className="text-center">
+                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+                  <span className="text-lg font-bold text-primary">{item.step}</span>
+                </div>
+                <h3 className="text-lg font-semibold">{item.title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Technologies Section */}
+      <section id="tecnologias" className="py-20">
+        <div className="container mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Tecnologías</h2>
+            <p className="mt-4 text-lg text-muted-foreground">
+              Herramientas modernas para soluciones robustas y escalables
+            </p>
+          </div>
+          <div className="mt-16 grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-6">
+            {[
+              "React", "Next.js", "TypeScript", "Tailwind CSS",
+              "Supabase", "PostgreSQL", "Go", "Python",
+              "Flutter", "Docker", "Vercel", "TensorFlow",
+            ].map((tech) => (
+              <div key={tech} className="flex items-center justify-center rounded-lg border border-border bg-card px-4 py-3 text-sm font-medium transition-all hover:border-primary/30 hover:shadow-sm">
+                {tech}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-20 md:py-32">
         <div className="container mx-auto max-w-5xl px-4 sm:px-6">
