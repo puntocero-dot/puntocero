@@ -29,16 +29,10 @@ export default function Home() {
           <div className="flex items-center gap-4">
             <button 
               onClick={() => setShowLoginForm(!showLoginForm)} 
-              className="text-sm font-medium text-foreground/80 hover:text-foreground"
+              className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
             >
               Iniciar Sesión
             </button>
-            <a
-              href="/dashboard"
-              className="hidden sm:flex rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
-            >
-              Área de Clientes
-            </a>
           </div>
         </div>
       </header>
@@ -112,13 +106,13 @@ export default function Home() {
                 Combinamos tecnología de punta, UX impecable e inteligencia artificial para potenciar tu negocio.
               </p>
               <div className="mt-8 flex flex-wrap gap-4">
-                <a 
-                  href="/dashboard" 
+                <button 
+                  onClick={() => setShowLoginForm(true)}
                   className="inline-flex items-center rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
                 >
                   Ver proyectos
                   <ArrowRight className="ml-2 h-4 w-4" />
-                </a>
+                </button>
                 <a 
                   href="#servicios" 
                   className="inline-flex items-center rounded-md border border-border bg-card px-5 py-2.5 text-sm font-medium hover:bg-card/80 transition-colors"
@@ -342,15 +336,9 @@ export default function Home() {
                 Agenda una consulta gratuita y conoce cómo podemos ayudarte.
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-4">
-                <a 
-                  href="/dashboard" 
-                  className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
-                >
-                  Área de clientes
-                </a>
                 <button 
                   onClick={() => setShowLoginForm(true)} 
-                  className="rounded-md border border-primary bg-transparent px-5 py-2.5 text-sm font-medium text-primary hover:bg-primary/10 transition-colors"
+                  className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
                 >
                   Iniciar sesión
                 </button>
