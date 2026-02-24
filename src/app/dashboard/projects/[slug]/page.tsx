@@ -37,7 +37,7 @@ import {
 import { Plus, ExternalLink, Pencil, Calendar, Trash2 } from "lucide-react";
 import { PROJECTS } from "@/lib/constants";
 import { format } from "date-fns";
-import type { Task } from "@/types";
+import type { Task, TaskStatus } from "@/types";
 
 // Demo tasks for visualization
 const DEMO_TASKS: Task[] = [
@@ -155,7 +155,7 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ slug: 
   
   const moveTask = (taskId: string, newStatus: string) => {
     setTasks(tasks.map(task => 
-      task.id === taskId ? { ...task, status: newStatus } : task
+      task.id === taskId ? { ...task, status: newStatus as TaskStatus } : task
     ));
   };
 
@@ -250,7 +250,7 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ slug: 
                 <Label htmlFor="status">Estado</Label>
                 <Select
                   value={newTask.status || "todo"}
-                  onValueChange={(value) => setNewTask({...newTask, status: value})}
+                  onValueChange={(value) => setNewTask({...newTask, status: value as TaskStatus})}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Seleccionar estado" />
@@ -332,7 +332,7 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ slug: 
                   <Label htmlFor="edit-status">Estado</Label>
                   <Select
                     value={currentTask.status}
-                    onValueChange={(value) => setCurrentTask({...currentTask, status: value})}
+                    onValueChange={(value) => setCurrentTask({...currentTask, status: value as TaskStatus})}
                   >
                     <SelectTrigger>
                       <SelectValue />
