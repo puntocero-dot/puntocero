@@ -6,8 +6,37 @@ import { GanttChart } from "@/components/dashboard/gantt-chart";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Plus, ExternalLink } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { 
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { 
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { Plus, ExternalLink, Pencil, Calendar, Trash2 } from "lucide-react";
 import { PROJECTS } from "@/lib/constants";
+import { format } from "date-fns";
 import type { Task } from "@/types";
 
 // Demo tasks for visualization
@@ -57,7 +86,78 @@ const DEMO_TASKS: Task[] = [
 export default function ProjectDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
   const project = PROJECTS.find((p) => p.slug === slug);
+  const [tasks, setTasks] = useState<Task[]>(DEMO_TASKS);
   const [view, setView] = useState<"kanban" | "gantt">("kanban");
+  const [isAddTaskOpen, setIsAddTaskOpen] = useState(false);
+  const [isEditTaskOpen, setIsEditTaskOpen] = useState(false);
+  const [isDeleteTaskOpen, setIsDeleteTaskOpen] = useState(false);
+  const [currentTask, setCurrentTask] = useState<Task | null>(null);
+  const [newTask, setNewTask] = useState<Partial<Task>>({
+    title: "",
+    description: "",
+    status: "todo",
+    priority: "medium",
+    due_date: "",
+  });
+  
+  const handleAddTask = () => {
+    const id = String(Math.max(...tasks.map(t => Number(t.id || 0))) + 1);
+    const task: Task = {
+      id,
+      project_id: slug,
+      title: newTask.title || "Nueva tarea",
+      description: newTask.description || "",
+      status: newTask.status || "todo",
+      priority: newTask.priority || "medium",
+      order_index: tasks.length,
+      due_date: newTask.due_date,
+      start_date: new Date().toISOString().split('T')[0],
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    };
+    
+    setTasks([...tasks, task]);
+    setNewTask({
+      title: "",
+      description: "",
+      status: "todo",
+      priority: "medium",
+      due_date: "",
+    });
+    setIsAddTaskOpen(false);
+  };
+  
+  const handleEditTask = () => {
+    if (!currentTask) return;
+    setTasks(tasks.map(task => 
+      task.id === currentTask.id ? { ...currentTask } : task
+    ));
+    setCurrentTask(null);
+    setIsEditTaskOpen(false);
+  };
+  
+  const handleDeleteTask = () => {
+    if (!currentTask) return;
+    setTasks(tasks.filter(task => task.id !== currentTask.id));
+    setCurrentTask(null);
+    setIsDeleteTaskOpen(false);
+  };
+  
+  const openEditTask = (task: Task) => {
+    setCurrentTask({...task});
+    setIsEditTaskOpen(true);
+  };
+  
+  const openDeleteTask = (task: Task) => {
+    setCurrentTask(task);
+    setIsDeleteTaskOpen(true);
+  };
+  
+  const moveTask = (taskId: string, newStatus: string) => {
+    setTasks(tasks.map(task => 
+      task.id === taskId ? { ...task, status: newStatus } : task
+    ));
+  };
 
   if (!project) {
     return (
@@ -93,7 +193,7 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ slug: 
             <ExternalLink className="mr-2 h-4 w-4" />
             Ver sitio
           </Button>
-          <Button size="sm">
+          <Button size="sm" onClick={() => setIsAddTaskOpen(true)}>
             <Plus className="mr-2 h-4 w-4" />
             Nueva tarea
           </Button>
@@ -108,13 +208,213 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ slug: 
         </TabsList>
 
         <TabsContent value="kanban" className="mt-4">
-          <KanbanBoard tasks={DEMO_TASKS} />
+          <KanbanBoard tasks={tasks} onEditTask={openEditTask} onDeleteTask={openDeleteTask} onMoveTask={moveTask} />
         </TabsContent>
 
         <TabsContent value="gantt" className="mt-4">
-          <GanttChart tasks={DEMO_TASKS} />
+          <GanttChart tasks={tasks} />
         </TabsContent>
       </Tabs>
+
+      {/* Add Task Dialog */}
+      <Dialog open={isAddTaskOpen} onOpenChange={setIsAddTaskOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Agregar nueva tarea</DialogTitle>
+            <DialogDescription>
+              Crea una nueva tarea para el proyecto {project?.name}.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid gap-2">
+              <Label htmlFor="title">Título</Label>
+              <Input
+                id="title"
+                value={newTask.title || ""}
+                onChange={(e) => setNewTask({...newTask, title: e.target.value})}
+                placeholder="Título de la tarea"
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="description">Descripción</Label>
+              <Textarea
+                id="description"
+                value={newTask.description || ""}
+                onChange={(e) => setNewTask({...newTask, description: e.target.value})}
+                placeholder="Descripción detallada"
+                rows={3}
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="status">Estado</Label>
+                <Select
+                  value={newTask.status || "todo"}
+                  onValueChange={(value) => setNewTask({...newTask, status: value})}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Seleccionar estado" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="backlog">Backlog</SelectItem>
+                    <SelectItem value="todo">Por hacer</SelectItem>
+                    <SelectItem value="in_progress">En progreso</SelectItem>
+                    <SelectItem value="review">Revisión</SelectItem>
+                    <SelectItem value="done">Completado</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="priority">Prioridad</Label>
+                <Select
+                  value={newTask.priority || "medium"}
+                  onValueChange={(value) => setNewTask({...newTask, priority: value as "low" | "medium" | "high" | "critical"})}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Seleccionar prioridad" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="low">Baja</SelectItem>
+                    <SelectItem value="medium">Media</SelectItem>
+                    <SelectItem value="high">Alta</SelectItem>
+                    <SelectItem value="critical">Crítica</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="due_date">Fecha límite</Label>
+              <Input
+                id="due_date"
+                type="date"
+                value={newTask.due_date || ""}
+                onChange={(e) => setNewTask({...newTask, due_date: e.target.value})}
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsAddTaskOpen(false)}>Cancelar</Button>
+            <Button onClick={handleAddTask}>Crear tarea</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Edit Task Dialog */}
+      {currentTask && (
+        <Dialog open={isEditTaskOpen} onOpenChange={setIsEditTaskOpen}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Editar tarea</DialogTitle>
+              <DialogDescription>
+                Modifica los detalles de la tarea.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid gap-2">
+                <Label htmlFor="edit-title">Título</Label>
+                <Input
+                  id="edit-title"
+                  value={currentTask.title}
+                  onChange={(e) => setCurrentTask({...currentTask, title: e.target.value})}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="edit-description">Descripción</Label>
+                <Textarea
+                  id="edit-description"
+                  value={currentTask.description || ""}
+                  onChange={(e) => setCurrentTask({...currentTask, description: e.target.value})}
+                  rows={3}
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="grid gap-2">
+                  <Label htmlFor="edit-status">Estado</Label>
+                  <Select
+                    value={currentTask.status}
+                    onValueChange={(value) => setCurrentTask({...currentTask, status: value})}
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="backlog">Backlog</SelectItem>
+                      <SelectItem value="todo">Por hacer</SelectItem>
+                      <SelectItem value="in_progress">En progreso</SelectItem>
+                      <SelectItem value="review">Revisión</SelectItem>
+                      <SelectItem value="done">Completado</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="edit-priority">Prioridad</Label>
+                  <Select
+                    value={currentTask.priority}
+                    onValueChange={(value) => setCurrentTask({...currentTask, priority: value as "low" | "medium" | "high" | "critical"})}
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="low">Baja</SelectItem>
+                      <SelectItem value="medium">Media</SelectItem>
+                      <SelectItem value="high">Alta</SelectItem>
+                      <SelectItem value="critical">Crítica</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="grid gap-2">
+                  <Label htmlFor="edit-start-date">Fecha inicio</Label>
+                  <Input
+                    id="edit-start-date"
+                    type="date"
+                    value={currentTask.start_date || ""}
+                    onChange={(e) => setCurrentTask({...currentTask, start_date: e.target.value})}
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="edit-due-date">Fecha límite</Label>
+                  <Input
+                    id="edit-due-date"
+                    type="date"
+                    value={currentTask.due_date || ""}
+                    onChange={(e) => setCurrentTask({...currentTask, due_date: e.target.value})}
+                  />
+                </div>
+              </div>
+            </div>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setIsEditTaskOpen(false)}>Cancelar</Button>
+              <Button onClick={handleEditTask}>Guardar cambios</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      )}
+
+      {/* Delete Task Dialog */}
+      {currentTask && (
+        <AlertDialog open={isDeleteTaskOpen} onOpenChange={setIsDeleteTaskOpen}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>¿Eliminar esta tarea?</AlertDialogTitle>
+              <AlertDialogDescription>
+                Esta acción eliminará permanentemente la tarea "{currentTask.title}".
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancelar</AlertDialogCancel>
+              <AlertDialogAction 
+                onClick={handleDeleteTask}
+                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              >
+                Eliminar
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      )}
     </div>
   );
 }

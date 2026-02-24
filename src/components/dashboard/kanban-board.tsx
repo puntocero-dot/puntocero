@@ -2,19 +2,25 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { TASK_STATUS_CONFIG, PRIORITY_CONFIG } from "@/lib/constants";
 import type { Task, TaskStatus } from "@/types";
-import { Calendar, User } from "lucide-react";
+import { Calendar, Pencil, Trash2, MoveHorizontal, User } from "lucide-react";
+import { useState } from "react";
 
 interface KanbanBoardProps {
   tasks: Task[];
+  onEditTask?: (task: Task) => void;
+  onDeleteTask?: (task: Task) => void;
+  onMoveTask?: (taskId: string, status: string) => void;
   onTaskClick?: (task: Task) => void;
 }
 
 const COLUMNS: TaskStatus[] = ["backlog", "todo", "in_progress", "review", "done"];
 
-export function KanbanBoard({ tasks, onTaskClick }: KanbanBoardProps) {
+export function KanbanBoard({ tasks, onEditTask, onDeleteTask, onMoveTask, onTaskClick }: KanbanBoardProps) {
+  const [draggedTaskId, setDraggedTaskId] = useState<string | null>(null);
   const grouped = COLUMNS.reduce(
     (acc, status) => {
       acc[status] = tasks.filter((t) => t.status === status);
@@ -30,7 +36,21 @@ export function KanbanBoard({ tasks, onTaskClick }: KanbanBoardProps) {
         const columnTasks = grouped[status];
 
         return (
-          <div key={status} className="flex w-72 shrink-0 flex-col">
+          <div 
+            key={status} 
+            className="flex w-72 shrink-0 flex-col"
+            onDragOver={(e) => {
+              e.preventDefault();
+              e.dataTransfer.dropEffect = "move";
+            }}
+            onDrop={(e) => {
+              e.preventDefault();
+              if (draggedTaskId && onMoveTask) {
+                onMoveTask(draggedTaskId, status);
+                setDraggedTaskId(null);
+              }
+            }}
+          >
             {/* Column header */}
             <div className="mb-3 flex items-center gap-2">
               <div className={cn("h-2 w-2 rounded-full", config.color)} />
@@ -45,11 +65,51 @@ export function KanbanBoard({ tasks, onTaskClick }: KanbanBoardProps) {
               {columnTasks.map((task) => (
                 <Card
                   key={task.id}
-                  className="cursor-pointer bg-card transition-all hover:border-primary/30 hover:shadow-md"
-                  onClick={() => onTaskClick?.(task)}
+                  className="bg-card transition-all hover:border-primary/30 hover:shadow-md"
+                  draggable={true}
+                  onDragStart={(e) => {
+                    setDraggedTaskId(task.id);
+                    e.dataTransfer.effectAllowed = "move";
+                  }}
+                  onDragEnd={() => setDraggedTaskId(null)}
                 >
                   <CardContent className="p-3">
-                    <p className="text-sm font-medium leading-snug">{task.title}</p>
+                    <div className="flex justify-between">
+                      <p 
+                        className="text-sm font-medium leading-snug cursor-pointer" 
+                        onClick={() => onTaskClick?.(task)}
+                      >
+                        {task.title}
+                      </p>
+                      <div className="flex space-x-1 ml-2">
+                        {onEditTask && (
+                          <Button 
+                            variant="ghost" 
+                            size="icon" 
+                            className="h-6 w-6" 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              onEditTask(task);
+                            }}
+                          >
+                            <Pencil className="h-3 w-3" />
+                          </Button>
+                        )}
+                        {onDeleteTask && (
+                          <Button 
+                            variant="ghost" 
+                            size="icon" 
+                            className="h-6 w-6 text-destructive" 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              onDeleteTask(task);
+                            }}
+                          >
+                            <Trash2 className="h-3 w-3" />
+                          </Button>
+                        )}
+                      </div>
+                    </div>
                     {task.description && (
                       <p className="mt-1 text-xs text-muted-foreground line-clamp-2">
                         {task.description}
