@@ -43,11 +43,18 @@ export function Sidebar() {
       {/* Logo */}
       <div className="flex h-16 items-center justify-between border-b border-border px-4">
         {!collapsed && (
-          <Link href="/dashboard" className="flex items-center gap-2">
+          <Link href="/dashboard" className="flex items-center gap-2 cursor-pointer">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
               <span className="text-sm font-bold text-primary-foreground">PC</span>
             </div>
             <span className="text-lg font-semibold tracking-tight">Punto Cero</span>
+          </Link>
+        )}
+        {collapsed && (
+          <Link href="/dashboard" className="flex items-center justify-center cursor-pointer">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
+              <span className="text-sm font-bold text-primary-foreground">PC</span>
+            </div>
           </Link>
         )}
         <Button
