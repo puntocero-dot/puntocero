@@ -8,7 +8,7 @@ export default function Home() {
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header / Navigation */}
@@ -21,14 +21,15 @@ export default function Home() {
             <span className="text-lg font-semibold tracking-tight">Punto Cero</span>
           </div>
           <nav className="hidden md:flex items-center gap-6">
+            <a href="#conocenos" className="text-sm font-medium text-foreground/80 hover:text-foreground">Conócenos</a>
             <a href="#servicios" className="text-sm font-medium text-foreground/80 hover:text-foreground">Servicios</a>
             <a href="#proyectos" className="text-sm font-medium text-foreground/80 hover:text-foreground">Proyectos</a>
             <a href="#proceso" className="text-sm font-medium text-foreground/80 hover:text-foreground">Proceso</a>
             <a href="#tecnologias" className="text-sm font-medium text-foreground/80 hover:text-foreground">Tecnologías</a>
           </nav>
           <div className="flex items-center gap-4">
-            <button 
-              onClick={() => setShowLoginForm(!showLoginForm)} 
+            <button
+              onClick={() => setShowLoginForm(!showLoginForm)}
               className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
             >
               Iniciar Sesión
@@ -53,8 +54,8 @@ export default function Home() {
             }}>
               <div className="mb-4">
                 <label className="block text-sm font-medium mb-1" htmlFor="email">Email</label>
-                <input 
-                  type="email" 
+                <input
+                  type="email"
                   id="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -65,8 +66,8 @@ export default function Home() {
               </div>
               <div className="mb-6">
                 <label className="block text-sm font-medium mb-1" htmlFor="password">Contraseña</label>
-                <input 
-                  type="password" 
+                <input
+                  type="password"
                   id="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -77,12 +78,12 @@ export default function Home() {
               </div>
               <div className="flex justify-between items-center">
                 <small className="text-xs text-muted-foreground">
-                  Usuarios de demostración:<br/>
-                  admin@puntocero.dev<br/>
+                  Usuarios de demostración:<br />
+                  admin@puntocero.dev<br />
                   wruballo@puntocero.dev
                 </small>
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
                 >
                   Entrar
@@ -102,19 +103,19 @@ export default function Home() {
                 Desarrollo de <span className="text-primary">Software</span> a Medida
               </h1>
               <p className="mt-6 text-lg text-muted-foreground">
-                En Punto Cero creamos soluciones digitales de alta calidad para empresas y startups. 
+                En Punto Cero creamos soluciones digitales de alta calidad para empresas y startups.
                 Combinamos tecnología de punta, UX impecable e inteligencia artificial para potenciar tu negocio.
               </p>
               <div className="mt-8 flex flex-wrap gap-4">
-                <button 
+                <button
                   onClick={() => setShowLoginForm(true)}
                   className="inline-flex items-center rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
                 >
                   Ver proyectos
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </button>
-                <a 
-                  href="#servicios" 
+                <a
+                  href="#servicios"
                   className="inline-flex items-center rounded-md border border-border bg-card px-5 py-2.5 text-sm font-medium hover:bg-card/80 transition-colors"
                 >
                   Nuestros servicios
@@ -164,14 +165,42 @@ export default function Home() {
                 </li>
               </ul>
               <div className="relative mt-8">
-                <Link 
-                  href="https://maps.puntocero.dev" 
+                <Link
+                  href="https://maps.puntocero.dev"
                   className="inline-flex items-center text-sm font-medium text-primary hover:underline"
                 >
                   Ver demostración en vivo
                   <ArrowRight className="ml-1 h-4 w-4" />
                 </Link>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Video Showcase Section */}
+      <section id="conocenos" className="py-16 md:py-24 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/[0.03] to-background pointer-events-none" />
+        <div className="container mx-auto max-w-5xl px-4 sm:px-6 relative">
+          <div className="mx-auto max-w-2xl text-center mb-10">
+            <p className="text-sm font-medium uppercase tracking-widest text-primary mb-3">Conócenos</p>
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Lo que hacemos en Punto Cero</h2>
+          </div>
+          <div className="relative group">
+            {/* Glow effect behind video */}
+            <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-primary/20 via-primary/10 to-primary/20 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-700" />
+            <div className="relative rounded-2xl overflow-hidden border border-border/50 shadow-2xl bg-black">
+              <video
+                className="w-full h-auto block"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+              >
+                <source src="/Punto_Cero.mp4" type="video/mp4" />
+                Tu navegador no soporta videos HTML5.
+              </video>
             </div>
           </div>
         </div>
@@ -336,8 +365,8 @@ export default function Home() {
                 Agenda una consulta gratuita y conoce cómo podemos ayudarte.
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-4">
-                <button 
-                  onClick={() => setShowLoginForm(true)} 
+                <button
+                  onClick={() => setShowLoginForm(true)}
                   className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
                 >
                   Iniciar sesión
