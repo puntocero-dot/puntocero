@@ -8,7 +8,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const CONFIG_PATH = path.join(__dirname, 'projects_config.json');
+const CONFIG_PATH = path.join(__dirname, '..', 'projects_config.json');
 const CONSTANTS_PATH = path.join(__dirname, 'src', 'lib', 'constants.ts');
 const SCHEMA_PATH = path.join(__dirname, 'supabase', 'schema.sql');
 

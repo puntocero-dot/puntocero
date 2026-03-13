@@ -252,7 +252,7 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ slug: 
               </h3>
               <div className="space-y-3">
                 {/* Specific project credentials logic will eventually pull from DB */}
-                <ProjectCredentialsSection projectName={project.name} />
+                <ProjectCredentialsSection projectName={project.name} credentials={project.credentials} />
               </div>
             </div>
           </div>
@@ -463,14 +463,11 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ slug: 
 }
 
 // Sub-component for Project Credentials
-function ProjectCredentialsSection({ projectName }: { projectName: string }) {
+function ProjectCredentialsSection({ projectName, credentials }: { projectName: string, credentials?: Project['credentials'] }) {
   const [visibleIds, setVisibleIds] = useState<Set<string>>(new Set());
 
-  // In a real app, this would filter the global credentials store by projectName
-  const mockCreds = [
-    { id: "1", label: "Admin Dashboard", user: "admin@dev.com", url: "https://dev.com" },
-    { id: "2", label: "Database Client", user: "postgres", url: "" },
-  ];
+  // Use credentials from project or fallback to empty array
+  const displayCreds = credentials || [];
 
   const toggleVisibility = (id: string) => {
     setVisibleIds((prev) => {
@@ -483,34 +480,38 @@ function ProjectCredentialsSection({ projectName }: { projectName: string }) {
 
   return (
     <div className="space-y-3">
-      {mockCreds.map((cred) => (
-        <div key={cred.id} className="p-3 border rounded-lg bg-card/50 flex items-center justify-between gap-3">
-          <div className="min-w-0 flex-1">
-            <p className="text-sm font-medium truncate">{cred.label}</p>
-            <p className="text-[11px] text-muted-foreground font-mono truncate">{cred.user}</p>
-            <p className="text-xs mt-1 font-mono text-primary">
-              {visibleIds.has(cred.id) ? "s3cur3P@ssw0rd!" : "••••••••••••"}
-            </p>
-          </div>
-          <div className="flex flex-col gap-1">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-8 w-8"
-              onClick={() => toggleVisibility(cred.id)}
-            >
-              {visibleIds.has(cred.id) ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-            </Button>
-            {cred.url && (
-              <Button variant="ghost" size="icon" className="h-8 w-8" asChild>
-                <a href={cred.url} target="_blank" rel="noopener noreferrer">
-                  <ExternalLink className="h-4 w-4" />
-                </a>
+      {displayCreds.length > 0 ? (
+        displayCreds.map((cred, idx) => (
+          <div key={idx} className="p-3 border rounded-lg bg-card/50 flex items-center justify-between gap-3">
+            <div className="min-w-0 flex-1">
+              <p className="text-sm font-medium truncate">{cred.label}</p>
+              {cred.username && <p className="text-[11px] text-muted-foreground font-mono truncate">{cred.username}</p>}
+              <p className="text-xs mt-1 font-mono text-primary">
+                {visibleIds.has(`${idx}`) ? (cred.password || "No pass") : "••••••••••••"}
+              </p>
+            </div>
+            <div className="flex flex-col gap-1">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8"
+                onClick={() => toggleVisibility(`${idx}`)}
+              >
+                {visibleIds.has(`${idx}`) ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </Button>
-            )}
+              {cred.url && (
+                <Button variant="ghost" size="icon" className="h-8 w-8" asChild>
+                  <a href={cred.url} target="_blank" rel="noopener noreferrer">
+                    <ExternalLink className="h-4 w-4" />
+                  </a>
+                </Button>
+              )}
+            </div>
           </div>
-        </div>
-      ))}
+        ))
+      ) : (
+        <p className="text-sm text-muted-foreground italic">No hay credenciales registradas para este proyecto.</p>
+      )}
       <p className="text-[10px] text-muted-foreground flex items-center gap-1 pt-2">
         <Shield className="h-3 w-3" />
         Estas credenciales son exclusivas de {projectName}.
