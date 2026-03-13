@@ -8,7 +8,7 @@ interface ProjectStore {
   setProjects: (projects: Project[]) => void;
 }
 
-export const useProjectStore = create<ProjectStore>((set) => ({
+export const useProjectStore = create<ProjectStore>()((set) => ({
   currentProject: null,
   projects: [],
   setCurrentProject: (project) => set({ currentProject: project }),

@@ -10,7 +10,7 @@ interface SplineHeroProps {
 }
 
 const SplineHero: React.FC<SplineHeroProps> = ({ 
-  scene = 'https://prod.spline.design/6Wq1Q7YAnlP8pL3p/scene.splinecode', // Placeholder scene
+  scene = 'https://prod.spline.design/i9Vbe-p8D9fX9N69/scene.splinecode', // Tech-themed abstract scene
   className = '' 
 }) => {
   return (
