@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useState } from "react";
+import { use, useState, useEffect } from "react";
 import { KanbanBoard } from "@/components/dashboard/kanban-board";
 import { GanttChart } from "@/components/dashboard/gantt-chart";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -99,6 +99,11 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ slug: 
     priority: "medium",
     due_date: "",
   });
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   
   const handleAddTask = () => {
     const id = String(Math.max(...tasks.map(t => Number(t.id || 0))) + 1);
@@ -159,10 +164,10 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ slug: 
     ));
   };
 
-  if (!project) {
+  if (!project || !mounted) {
     return (
       <div className="flex h-64 items-center justify-center">
-        <p className="text-muted-foreground">Proyecto no encontrado</p>
+        <p className="text-muted-foreground">{!mounted ? "Cargando..." : "Proyecto no encontrado"}</p>
       </div>
     );
   }

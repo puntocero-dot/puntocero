@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { StatCard } from "@/components/dashboard/stat-card";
 import { ProjectCard } from "@/components/dashboard/project-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -50,6 +51,13 @@ export default function DashboardPage() {
   const totalTasks = Object.values(DEMO_TASKS_PER_PROJECT).reduce((s, t) => s + t.total, 0);
   const totalDone = Object.values(DEMO_TASKS_PER_PROJECT).reduce((s, t) => s + t.done, 0);
   const healthyCount = DEMO_HEALTH.filter((h) => h.status === "healthy").length;
+
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
 
   return (
     <div className="space-y-8">
