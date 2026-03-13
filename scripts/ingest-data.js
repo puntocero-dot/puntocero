@@ -7,16 +7,35 @@
 
 const fs = require('fs');
 const path = require('path');
+const CryptoJS = require('crypto-js');
 
 const CONFIG_PATH = path.join(__dirname, '..', 'projects_config.json');
-const CONSTANTS_PATH = path.join(__dirname, 'src', 'lib', 'constants.ts');
-const SCHEMA_PATH = path.join(__dirname, 'supabase', 'schema.sql');
+const CONSTANTS_PATH = path.join(__dirname, '..', 'src', 'lib', 'constants.ts');
+const SCHEMA_PATH = path.join(__dirname, '..', 'supabase', 'schema.sql');
+
+// Use same key logic as crypto.ts for local development consistency
+const ENCRYPTION_KEY = process.env.CREDENTIALS_ENCRYPTION_KEY || "default-dev-key-change-me!!";
 
 function updateConstants(projects) {
   let content = fs.readFileSync(CONSTANTS_PATH, 'utf8');
   
+  // Encrypt passwords before saving
+  const processedProjects = projects.map(p => ({
+    ...p,
+    credentials: p.credentials?.map(c => {
+      if (c.password) {
+        return {
+          ...c,
+          encrypted_password: CryptoJS.AES.encrypt(c.password, ENCRYPTION_KEY).toString(),
+          password: undefined // remove plain text
+        };
+      }
+      return c;
+    })
+  }));
+
   // Create the new PROJECTS array string
-  const projectsString = JSON.stringify(projects, null, 2)
+  const projectsString = JSON.stringify(processedProjects, null, 2)
     .replace(/"([^"]+)":/g, '$1:') // Remove quotes from keys
     .replace(/"/g, "'"); // Use single quotes
     

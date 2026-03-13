@@ -1,29 +1,134 @@
 export const PROJECTS = [
-  { 
-    name: "DrPollitoApp", 
-    slug: "drpollitoapp", 
-    color: "#F59E0B", 
-    subdomain: "drpollito",
+  {
+    name: 'My_Dr',
+    slug: 'my-dr',
+    color: '#0f172a',
+    subdomain: 'drpollito',
     links: [
-      { label: "Vercel", url: "https://vercel.com" },
-      { label: "Supabase", url: "https://supabase.com" },
-      { label: "GitHub", url: "https://github.com" }
+      {
+        label: 'Production Frontend',
+        url: 'https://frontend-production-c880.up.railway.app'
+      },
+      {
+        label: 'Custom Domain',
+        url: 'https://drpollito.puntocero.dev'
+      },
+      {
+        label: 'Railway Backend',
+        url: 'https://backend-production-e373.up.railway.app'
+      },
+      {
+        label: 'GitHub',
+        url: 'https://github.com/puntocero-dot/drpollito'
+      }
+    ],
+    credentials: [
+      {
+        label: 'Admin Portal',
+        username: 'admin@mydr.com',
+        url: 'https://drpollito.puntocero.dev/dashboard',
+        encrypted_password: 'U2FsdGVkX19afFzIm58UPF/hI7gvHzhjP1yrbeFdZgQ='
+      },
+      {
+        label: 'Doctor Access',
+        username: 'doctor@mydr.com',
+        url: 'https://drpollito.puntocero.dev/dashboard',
+        encrypted_password: 'U2FsdGVkX1/OsEgI2Nf4083jxts6mZ99/IeVanXi5NQ='
+      }
     ]
   },
-  { 
-    name: "Maps", 
-    slug: "maps", 
-    color: "#3B82F6", 
-    subdomain: "maps",
+  {
+    name: 'Conta2Go',
+    slug: 'conta2go',
+    color: '#1e3a8a',
+    subdomain: 'conta2go',
     links: [
-      { label: "Google Maps API", url: "https://console.cloud.google.com" },
-      { label: "Railway", url: "https://railway.app" }
+      {
+        label: 'GitHub',
+        url: 'https://github.com/puntocero-dot/conta2go'
+      }
+    ],
+    credentials: [
+      {
+        label: 'Super Admin',
+        username: 'admin@conta2go.com',
+        url: 'https://conta2go.up.railway.app/login',
+        encrypted_password: 'U2FsdGVkX18rJ/beWgGdvpv2dGslY2QBAuIYP1Z1Uig='
+      },
+      {
+        label: 'Contador',
+        username: 'contador@conta2go.com',
+        url: 'https://conta2go.up.railway.app/login',
+        encrypted_password: 'U2FsdGVkX19lQU100EmtrZ44acW4H892e0B9TkQTS88='
+      }
     ]
   },
-  { name: "Armados2Go", slug: "armados2go", color: "#10B981", subdomain: "armados2go" },
-  { name: "TheYellowExpress", slug: "theyellowexpress", color: "#EAB308", subdomain: "theyellowexpress" },
-  { name: "ContaPro", slug: "contapro", color: "#8B5CF6", subdomain: "contapro" },
-  { name: "Logitrack", slug: "logitrack", color: "#EF4444", subdomain: "logitrack" },
+  {
+    name: 'QR_Pass',
+    slug: 'qr-pass',
+    color: '#f59e0b',
+    subdomain: 'qr-pass',
+    links: [
+      {
+        label: 'GitHub',
+        url: 'https://github.com/puntocero-dot/QR_Pass'
+      }
+    ],
+    credentials: [
+      {
+        label: 'Vendor Portal',
+        username: 'vendedor',
+        url: 'https://qrpass.up.railway.app/vendor.html',
+        encrypted_password: 'U2FsdGVkX19YkkLDgBcBZQ5PLyV8ihX3+6gSxDPQ8+4='
+      },
+      {
+        label: 'Admin Console',
+        username: 'admin',
+        url: 'https://qrpass.up.railway.app/admin',
+        encrypted_password: 'U2FsdGVkX18Kh3PMn1C52P3xDjFivWi7Sciaj0Nnnso='
+      }
+    ]
+  },
+  {
+    name: 'Oh Pair',
+    slug: 'ohpair',
+    color: '#F9F7F2',
+    subdomain: 'ohpair',
+    links: [
+      {
+        label: 'GitHub',
+        url: 'https://github.com/puntocero-dot/ohpair.sv'
+      }
+    ],
+    credentials: [
+      {
+        label: 'Admin Backoffice',
+        username: 'admin',
+        url: 'https://ohpair.up.railway.app/admin.html',
+        encrypted_password: 'U2FsdGVkX19KTF8jykXqhdv384HBTb0n550k0RY5wwg='
+      }
+    ]
+  },
+  {
+    name: 'Logitrack',
+    slug: 'logitrack',
+    color: '#000000',
+    subdomain: 'logitrack',
+    links: [
+      {
+        label: 'GitHub',
+        url: 'https://github.com/puntocero-dot/logitrack'
+      }
+    ],
+    credentials: [
+      {
+        label: 'API Gateway',
+        username: 'superadmin',
+        url: 'https://logitrack-gateway.up.railway.app',
+        encrypted_password: 'U2FsdGVkX1/VQz1IDCXZlomjzr5l9lA8Jz+KCmigXhX0VKG9oBKVvqVtISRv45rQ'
+      }
+    ]
+  }
 ] as const;
 
 export const BASE_DOMAIN = "puntocero.dev";

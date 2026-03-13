@@ -29,7 +29,7 @@ export interface Project {
   created_at: string;
   updated_at: string;
   links?: { label: string; url: string }[];
-  credentials?: { label: string; username?: string; password?: string; url?: string }[];
+  credentials?: { label: string; username?: string; password?: string; encrypted_password?: string; url?: string }[];
 }
 
 export interface Domain {

@@ -34,10 +34,11 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Plus, ExternalLink, Pencil, Calendar, Trash2, KeyRound, Eye, EyeOff, Copy, Shield } from "lucide-react";
+import { Plus, ExternalLink, Pencil, Calendar, Trash2, KeyRound, Eye, EyeOff, Copy, Shield, ChevronLeft, ChevronRight, Search, Bell, LogOut, User } from "lucide-react";
 import { PROJECTS } from "@/lib/constants";
 import { format } from "date-fns";
 import type { Task, TaskStatus, Project } from "@/types";
+import { decrypt } from "@/lib/crypto";
 
 // Demo tasks for visualization
 const DEMO_TASKS: Task[] = [
@@ -492,7 +493,9 @@ function ProjectCredentialsSection({ projectName, credentials }: { projectName: 
               <p className="text-sm font-medium truncate">{cred.label}</p>
               {cred.username && <p className="text-[11px] text-muted-foreground font-mono truncate">{cred.username}</p>}
               <p className="text-xs mt-1 font-mono text-primary">
-                {visibleIds.has(`${idx}`) ? (cred.password || "No pass") : "••••••••••••"}
+                {visibleIds.has(`${idx}`) ? (
+                  cred.encrypted_password ? decrypt(cred.encrypted_password) : (cred.password || "No pass")
+                ) : "••••••••••••"}
               </p>
             </div>
             <div className="flex flex-col gap-1">
