@@ -1,10 +1,6 @@
 import { create } from "zustand";
 import type { Project } from "@/types";
 
-// Nota: Si el warning persiste, podrías necesitar actualizar la versión de Zustand
-// Esto es porque algunas versiones antiguas de Zustand utilizaban `import create from 'zustand'`
-// mientras que las versiones modernas utilizan `import { create } from 'zustand'`
-
 interface ProjectStore {
   currentProject: Project | null;
   projects: Project[];

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -102,6 +102,11 @@ export default function LicensesPage() {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [newLicense, setNewLicense] = useState(emptyLicense);
   const [currentLicense, setCurrentLicense] = useState<License | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const totalMonthly = licenses.reduce((s, l) => s + l.costMonthly, 0);
   const expiringCount = licenses.filter(
@@ -139,6 +144,8 @@ export default function LicensesPage() {
     setCurrentLicense(lic);
     setIsDeleteOpen(true);
   };
+
+  if (!mounted) return null;
 
   return (
     <div className="space-y-6">
