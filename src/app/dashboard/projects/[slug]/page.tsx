@@ -37,7 +37,7 @@ import {
 import { Plus, ExternalLink, Pencil, Calendar, Trash2, KeyRound, Eye, EyeOff, Copy, Shield } from "lucide-react";
 import { PROJECTS } from "@/lib/constants";
 import { format } from "date-fns";
-import type { Task, TaskStatus } from "@/types";
+import type { Task, TaskStatus, Project } from "@/types";
 
 // Demo tasks for visualization
 const DEMO_TASKS: Task[] = [
@@ -85,7 +85,7 @@ const DEMO_TASKS: Task[] = [
 
 export default function ProjectDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
-  const project = PROJECTS.find((p) => p.slug === slug);
+  const project = PROJECTS.find((p) => p.slug === slug) as Project | undefined;
   const [tasks, setTasks] = useState<Task[]>(DEMO_TASKS);
   const [view, setView] = useState<"kanban" | "gantt">("kanban");
   const [isAddTaskOpen, setIsAddTaskOpen] = useState(false);
