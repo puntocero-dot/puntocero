@@ -34,7 +34,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Plus, ExternalLink, Pencil, Calendar, Trash2 } from "lucide-react";
+import { Plus, ExternalLink, Pencil, Calendar, Trash2, KeyRound, Eye, EyeOff, Copy, Shield } from "lucide-react";
 import { PROJECTS } from "@/lib/constants";
 import { format } from "date-fns";
 import type { Task, TaskStatus } from "@/types";
@@ -201,10 +201,11 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ slug: 
       </div>
 
       {/* View toggle */}
-      <Tabs value={view} onValueChange={(v) => setView(v as "kanban" | "gantt")}>
+      <Tabs value={view} onValueChange={(v) => setView(v as any)}>
         <TabsList>
           <TabsTrigger value="kanban">Kanban</TabsTrigger>
           <TabsTrigger value="gantt">Gantt</TabsTrigger>
+          <TabsTrigger value="resources">Recursos y Credenciales</TabsTrigger>
         </TabsList>
 
         <TabsContent value="kanban" className="mt-4">
@@ -213,6 +214,48 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ slug: 
 
         <TabsContent value="gantt" className="mt-4">
           <GanttChart tasks={tasks} />
+        </TabsContent>
+
+        <TabsContent value="resources" className="mt-4 space-y-6">
+          <div className="grid gap-6 md:grid-cols-2">
+            {/* Technology Links */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold flex items-center gap-2">
+                <ExternalLink className="h-5 w-5 text-primary" />
+                Tecnologías y Enlaces
+              </h3>
+              <div className="grid gap-3">
+                {project.links && project.links.length > 0 ? (
+                  project.links.map((link, i) => (
+                    <Button key={i} variant="outline" className="justify-start h-auto py-3 px-4 w-full" asChild>
+                      <a href={link.url} target="_blank" rel="noopener noreferrer">
+                        <div className="flex flex-col items-start gap-0.5">
+                          <span className="font-medium text-sm">{link.label}</span>
+                          <span className="text-[10px] text-muted-foreground truncate w-full max-w-[200px]">
+                            {link.url}
+                          </span>
+                        </div>
+                      </a>
+                    </Button>
+                  ))
+                ) : (
+                  <p className="text-sm text-muted-foreground italic">No hay enlaces registrados para este proyecto.</p>
+                )}
+              </div>
+            </div>
+
+            {/* Project Credentials (Mock) */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold flex items-center gap-2">
+                <KeyRound className="h-5 w-5 text-primary" />
+                Credenciales del Proyecto
+              </h3>
+              <div className="space-y-3">
+                {/* Specific project credentials logic will eventually pull from DB */}
+                <ProjectCredentialsSection projectName={project.name} />
+              </div>
+            </div>
+          </div>
         </TabsContent>
       </Tabs>
 
@@ -415,6 +458,63 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ slug: 
           </AlertDialogContent>
         </AlertDialog>
       )}
+    </div>
+  );
+}
+
+// Sub-component for Project Credentials
+function ProjectCredentialsSection({ projectName }: { projectName: string }) {
+  const [visibleIds, setVisibleIds] = useState<Set<string>>(new Set());
+
+  // In a real app, this would filter the global credentials store by projectName
+  const mockCreds = [
+    { id: "1", label: "Admin Dashboard", user: "admin@dev.com", url: "https://dev.com" },
+    { id: "2", label: "Database Client", user: "postgres", url: "" },
+  ];
+
+  const toggleVisibility = (id: string) => {
+    setVisibleIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  return (
+    <div className="space-y-3">
+      {mockCreds.map((cred) => (
+        <div key={cred.id} className="p-3 border rounded-lg bg-card/50 flex items-center justify-between gap-3">
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-medium truncate">{cred.label}</p>
+            <p className="text-[11px] text-muted-foreground font-mono truncate">{cred.user}</p>
+            <p className="text-xs mt-1 font-mono text-primary">
+              {visibleIds.has(cred.id) ? "s3cur3P@ssw0rd!" : "••••••••••••"}
+            </p>
+          </div>
+          <div className="flex flex-col gap-1">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8"
+              onClick={() => toggleVisibility(cred.id)}
+            >
+              {visibleIds.has(cred.id) ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+            </Button>
+            {cred.url && (
+              <Button variant="ghost" size="icon" className="h-8 w-8" asChild>
+                <a href={cred.url} target="_blank" rel="noopener noreferrer">
+                  <ExternalLink className="h-4 w-4" />
+                </a>
+              </Button>
+            )}
+          </div>
+        </div>
+      ))}
+      <p className="text-[10px] text-muted-foreground flex items-center gap-1 pt-2">
+        <Shield className="h-3 w-3" />
+        Estas credenciales son exclusivas de {projectName}.
+      </p>
     </div>
   );
 }

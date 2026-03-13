@@ -28,6 +28,7 @@ export interface Project {
   repo_url?: string;
   created_at: string;
   updated_at: string;
+  links?: { label: string; url: string }[];
 }
 
 export interface Domain {

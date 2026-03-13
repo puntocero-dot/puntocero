@@ -1,6 +1,25 @@
 export const PROJECTS = [
-  { name: "DrPollitoApp", slug: "drpollitoapp", color: "#F59E0B", subdomain: "drpollito" },
-  { name: "Maps", slug: "maps", color: "#3B82F6", subdomain: "maps" },
+  { 
+    name: "DrPollitoApp", 
+    slug: "drpollitoapp", 
+    color: "#F59E0B", 
+    subdomain: "drpollito",
+    links: [
+      { label: "Vercel", url: "https://vercel.com" },
+      { label: "Supabase", url: "https://supabase.com" },
+      { label: "GitHub", url: "https://github.com" }
+    ]
+  },
+  { 
+    name: "Maps", 
+    slug: "maps", 
+    color: "#3B82F6", 
+    subdomain: "maps",
+    links: [
+      { label: "Google Maps API", url: "https://console.cloud.google.com" },
+      { label: "Railway", url: "https://railway.app" }
+    ]
+  },
   { name: "Armados2Go", slug: "armados2go", color: "#10B981", subdomain: "armados2go" },
   { name: "TheYellowExpress", slug: "theyellowexpress", color: "#EAB308", subdomain: "theyellowexpress" },
   { name: "ContaPro", slug: "contapro", color: "#8B5CF6", subdomain: "contapro" },
