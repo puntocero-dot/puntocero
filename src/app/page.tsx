@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Code, Database, Globe, Lock, MonitorSmartphone, Server, Zap } from 'lucide-react';
+import SplineHero from '@/components/ui/SplineHero';
 
 export default function Home() {
   const [showLoginForm, setShowLoginForm] = useState(false);
@@ -173,6 +174,11 @@ export default function Home() {
                   <ArrowRight className="ml-1 h-4 w-4" />
                 </Link>
               </div>
+            </div>
+            
+            {/* Spline 3D Scene */}
+            <div className="md:h-[600px] h-[400px] w-full relative flex items-center justify-center">
+              <SplineHero />
             </div>
           </div>
         </div>
