@@ -124,10 +124,28 @@
     @apply bg-background text-foreground;
   }
 }
+
 /* Spline Enhancements */
 @keyframes spline-float {
-  0%, 100% { transform: translateX(-10px); }
-  50% { transform: translateX(10px); }
+  0%, 100% { transform: translateX(-20px); }
+  50% { transform: translateX(20px); }
 }
-.spline-animate { animation: spline-float 6s ease-in-out infinite; }
-canvas + div[style*='position: absolute'] { display: none !important; }
+
+.spline-animate { 
+  animation: spline-float 8s ease-in-out infinite;
+  display: block;
+}
+
+/* Hide Spline Watermark - Aggressive */
+[class*="spline"] > a,
+[class*="spline"] > div[style*="position: absolute"],
+canvas + div,
+canvas + a,
+.spline-watermark,
+#spline-canvas + div,
+a[href*="spline.design"] {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
