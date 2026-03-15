@@ -10,9 +10,22 @@ interface SplineHeroProps {
 }
 
 const SplineHero: React.FC<SplineHeroProps> = ({ 
-  scene = 'https://prod.spline.design/i9Vbe-p8D9fX9N69/scene.splinecode', // Tech-themed abstract scene
+  scene = 'https://prod.spline.design/Nmx4Vyeze9wJ-9zm/scene.splinecode', // Verified public scene
   className = '' 
 }) => {
+  const [error, setError] = React.useState<boolean>(false);
+
+  if (error) {
+    return (
+      <div className={`flex items-center justify-center w-full h-full bg-slate-900/5 backdrop-blur-sm border border-dashed border-slate-200 rounded-xl ${className}`}>
+        <div className="text-slate-400 text-center p-4">
+          <div className="font-medium mb-1">Experiencia 3D no disponible</div>
+          <div className="text-xs">Continuando con la experiencia simplificada</div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={`relative w-full h-full min-h-[500px] overflow-hidden ${className}`}>
       <Suspense fallback={
@@ -22,6 +35,10 @@ const SplineHero: React.FC<SplineHeroProps> = ({
       }>
         <Spline 
           scene={scene} 
+          onError={() => {
+            console.error('Spline failed to load:', scene);
+            setError(true);
+          }}
         />
       </Suspense>
     </div>
