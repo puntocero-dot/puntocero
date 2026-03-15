@@ -124,3 +124,10 @@
     @apply bg-background text-foreground;
   }
 }
+/* Spline Enhancements */
+@keyframes spline-float {
+  0%, 100% { transform: translateX(-10px); }
+  50% { transform: translateX(10px); }
+}
+.spline-animate { animation: spline-float 6s ease-in-out infinite; }
+canvas + div[style*='position: absolute'] { display: none !important; }

@@ -27,7 +27,7 @@ const SplineHero: React.FC<SplineHeroProps> = ({
   }
 
   return (
-    <div className={`relative w-full h-full min-h-[500px] overflow-hidden ${className}`}>
+    <div className={`relative w-full h-full min-h-[500px] overflow-hidden spline-animate ${className}`}>
       <Suspense fallback={
         <div className="flex items-center justify-center w-full h-full bg-slate-900/5 backdrop-blur-sm animate-pulse">
           <div className="text-slate-400 font-medium">Cargando experiencia 3D...</div>
