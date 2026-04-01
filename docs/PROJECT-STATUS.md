@@ -123,7 +123,7 @@ punto-cero-core/
 - **Secciones:** Hero, Servicios (`#servicios`), Proyectos (`#proyectos`), Proceso (`#proceso`), Tecnologías (`#tecnologias`), CTA, Footer
 - **Login modal:** Se abre con el botón "Iniciar Sesión" (navbar, hero, CTA)
 - **Seguridad:** Se eliminaron TODOS los links directos a `/dashboard`. La única forma de entrar es a través del modal de login
-- **Usuarios demo visibles:** `admin@puntocero.dev`, `wruballo@puntocero.dev`
+- **Usuarios demo:** Eliminados de la UI pública por seguridad
 - **⚠️ IMPORTANTE:** El login actual NO valida credenciales realmente. Solo hace `window.location.href = '/dashboard'` al enviar el formulario. La integración con Supabase Auth está pendiente
 
 ### 3.2 Página de Login (`/login` — `src/app/login/page.tsx`)
@@ -419,7 +419,7 @@ Definidos en `src/lib/constants.ts` como `PROJECTS`.
 2. **Integrar Supabase Auth (login real)**
    - Archivo clave: `src/app/login/page.tsx` (tiene `TODO` en línea 24)
    - Landing modal en `src/app/page.tsx` (línea 56-58 redirige sin validar)
-   - Crear usuarios en Supabase Auth: `admin@puntocero.dev`, `wruballo@puntocero.dev`
+   - Crear usuarios en Supabase Auth según sea necesario
    - Conectar `src/lib/supabase/client.ts` y `middleware.ts`
    - Proteger rutas `/dashboard/*` → redirigir a login si no hay sesión
 

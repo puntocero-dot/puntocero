@@ -127,25 +127,32 @@
 
 /* Spline Enhancements */
 @keyframes spline-float {
-  0%, 100% { transform: translateX(-20px); }
-  50% { transform: translateX(20px); }
+  0%, 100% { transform: translateX(-30px); }
+  50% { transform: translateX(30px); }
 }
 
+.spline-animate canvas,
 .spline-animate { 
-  animation: spline-float 8s ease-in-out infinite;
-  display: block;
+  animation: spline-float 10s ease-in-out infinite !important;
+  display: block !important;
 }
 
-/* Hide Spline Watermark - Aggressive */
+/* Hide Spline Watermark - Ultra Aggressive */
 [class*="spline"] > a,
-[class*="spline"] > div[style*="position: absolute"],
+[class*="spline"] > div[style*="absolute"],
 canvas + div,
 canvas + a,
 .spline-watermark,
 #spline-canvas + div,
-a[href*="spline.design"] {
+a[href*="spline.design"],
+div[style*="background-image"][style*="spline"],
+div[style*="z-index"][style*="999999"],
+img[src*="spline"] {
   display: none !important;
   opacity: 0 !important;
   visibility: hidden !important;
   pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
 }

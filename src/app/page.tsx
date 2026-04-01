@@ -78,11 +78,7 @@ export default function Home() {
                 />
               </div>
               <div className="flex justify-between items-center">
-                <small className="text-xs text-muted-foreground">
-                  Usuarios de demostración:<br />
-                  admin@puntocero.dev<br />
-                  wruballo@puntocero.dev
-                </small>
+
                 <button
                   type="submit"
                   className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
