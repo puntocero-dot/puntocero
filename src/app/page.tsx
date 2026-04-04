@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Code, Database, Globe, Lock, MonitorSmartphone, Server, Zap } from 'lucide-react';
-import SplineHero from '@/components/ui/SplineHero';
+import LensFlareHero from '@/components/ui/LensFlareHero';
 
 export default function Home() {
   const [showLoginForm, setShowLoginForm] = useState(false);
@@ -172,9 +172,9 @@ export default function Home() {
               </div>
             </div>
             
-            {/* Spline 3D Scene */}
+            {/* LensFlare 3D Scene */}
             <div className="md:h-[600px] h-[400px] w-full relative flex items-center justify-center">
-              <SplineHero />
+              <LensFlareHero />
             </div>
           </div>
         </div>
