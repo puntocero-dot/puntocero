@@ -290,12 +290,12 @@ export default function Home() {
           </div>
           <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { name: "Logitrack", desc: "Rastreo y optimización de flotas con IA", color: "bg-red-500/10", textColor: "text-red-500" },
-              { name: "ContaPro", desc: "Software contable en la nube para PYMEs", color: "bg-purple-500/10", textColor: "text-purple-500" },
-              { name: "Maps", desc: "Servicio de mapas y geolocalización", color: "bg-blue-500/10", textColor: "text-blue-500" },
-              { name: "DrPollitoApp", desc: "App de gestión para restaurantes", color: "bg-amber-500/10", textColor: "text-amber-500" },
-              { name: "TheYellowExpress", desc: "Sistema de logística y entregas", color: "bg-yellow-500/10", textColor: "text-yellow-500" },
-              { name: "Armados2Go", desc: "Plataforma de ensamblaje bajo demanda", color: "bg-emerald-500/10", textColor: "text-emerald-500" },
+              { name: "FleetTrack", desc: "Monitoreo y optimización de flotas con IA", color: "bg-red-500/10", textColor: "text-red-500" },
+              { name: "CloudBooks", desc: "Software contable en la nube para PYMEs", color: "bg-purple-500/10", textColor: "text-purple-500" },
+              { name: "GeoMap", desc: "Servicio de mapas y geolocalización avanzada", color: "bg-blue-500/10", textColor: "text-blue-500" },
+              { name: "BistroApp", desc: "Plataforma de gestión para el sector gastronómico", color: "bg-amber-500/10", textColor: "text-amber-500" },
+              { name: "SwiftLog", desc: "Sistema inteligente de logística y entregas", color: "bg-yellow-500/10", textColor: "text-yellow-500" },
+              { name: "Build2Go", desc: "Marketplace de ensamblaje técnico bajo demanda", color: "bg-emerald-500/10", textColor: "text-emerald-500" },
             ].map((proj) => (
               <div key={proj.name} className="rounded-xl border border-border bg-card p-6 transition-all hover:shadow-md">
                 <div className={`mb-3 inline-flex rounded-lg ${proj.color} px-3 py-1`}>

@@ -347,7 +347,7 @@ Interfaces: User, Project, Domain, Task, License, Credential,
 ```env
 NEXT_PUBLIC_SUPABASE_URL=https://[project-id].supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=[anon-key]
-CREDENTIALS_ENCRYPTION_KEY=Diego1989r$
+CREDENTIALS_ENCRYPTION_KEY=[tu-clave-aqui]
 NEXT_PUBLIC_ROOT_DOMAIN=puntocero.dev
 ```
 

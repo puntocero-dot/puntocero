@@ -272,16 +272,15 @@ DROP TRIGGER IF EXISTS tr_inventory_updated_at ON public.inventory;
 CREATE TRIGGER tr_inventory_updated_at BEFORE UPDATE ON public.inventory
   FOR EACH ROW EXECUTE FUNCTION update_updated_at();
 
--- ============================================================
 -- SEED: Initial Projects
 -- ============================================================
 INSERT INTO public.projects (name, slug, description, status, color, subdomain) VALUES
-  ('DrPollitoApp', 'drpollitoapp', 'Plataforma veterinaria inteligente', 'active', '#F59E0B', 'drpollito'),
-  ('Maps', 'maps', 'Servicio de mapas y geolocalización', 'active', '#3B82F6', 'maps'),
-  ('Armados2Go', 'armados2go', 'Marketplace de armado de PCs', 'active', '#10B981', 'armados2go'),
-  ('TheYellowExpress', 'theyellowexpress', 'Logística de última milla', 'active', '#EAB308', 'theyellowexpress'),
-  ('ContaPro', 'contapro', 'Software contable en la nube', 'active', '#8B5CF6', 'contapro'),
-  ('Logitrack', 'logitrack', 'Rastreo y optimización de flotas', 'active', '#EF4444', 'logitrack')
+  ('BistroApp', 'bistroapp', 'Plataforma gastronómica inteligente', 'active', '#F59E0B', 'bistro'),
+  ('GeoMap', 'geomap', 'Servicio de mapas y geolocalización', 'active', '#3B82F6', 'geomap'),
+  ('Build2Go', 'build2go', 'Marketplace de ensamblaje técnico', 'active', '#10B981', 'build2go'),
+  ('SwiftLog', 'swiftlog', 'Logística de última milla', 'active', '#EAB308', 'swiftlog'),
+  ('CloudBooks', 'cloudbooks', 'Software contable en la nube', 'active', '#8B5CF6', 'cloudbooks'),
+  ('FleetTrack', 'fleettrack', 'Rastreo y optimización de flotas', 'active', '#EF4444', 'fleettrack')
 ON CONFLICT (slug) DO NOTHING;
 
 -- Seed domains for each project
