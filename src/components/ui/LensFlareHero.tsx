@@ -130,8 +130,8 @@ const LensFlareHero: React.FC<LensFlareHeroProps> = ({ className = '' }) => {
   return (
     <div 
       ref={containerRef} 
-      className={`relative w-full h-full min-h-[500px] overflow-hidden rounded-2xl ${className}`} 
-      style={{ background: 'radial-gradient(circle at center, #0f172a 0%, #020617 100%)' }}
+      className={`absolute inset-0 w-full h-full overflow-hidden pointer-events-none ${className}`} 
+      style={{ zIndex: 0 }}
     />
   );
 };

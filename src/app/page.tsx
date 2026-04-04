@@ -92,14 +92,20 @@ export default function Home() {
       )}
 
       {/* Hero Section */}
-      <section className="py-20 md:py-32">
-        <div className="container mx-auto max-w-7xl px-4 sm:px-6">
+      <section className="relative py-20 md:py-32 overflow-hidden bg-slate-950">
+        {/* Full Perspective Background */}
+        <LensFlareHero />
+        
+        {/* Dark overlay for text contrast */}
+        <div className="absolute inset-0 bg-black/40 z-[1] pointer-events-none" />
+
+        <div className="container relative z-10 mx-auto max-w-7xl px-4 sm:px-6">
           <div className="grid gap-12 md:grid-cols-2 md:items-center">
             <div>
-              <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
+              <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl text-white">
                 Desarrollo de <span className="text-primary">Software</span> a Medida
               </h1>
-              <p className="mt-6 text-lg text-muted-foreground">
+              <p className="mt-6 text-lg text-slate-300">
                 En Punto Cero creamos soluciones digitales de alta calidad para empresas y startups.
                 Combinamos tecnología de punta, UX impecable e inteligencia artificial para potenciar tu negocio.
               </p>
@@ -113,14 +119,14 @@ export default function Home() {
                 </button>
                 <a
                   href="#servicios"
-                  className="inline-flex items-center rounded-md border border-border bg-card px-5 py-2.5 text-sm font-medium hover:bg-card/80 transition-colors"
+                  className="inline-flex items-center rounded-md border border-slate-700 bg-white/5 backdrop-blur-sm px-5 py-2.5 text-sm font-medium text-white hover:bg-white/10 transition-colors"
                 >
                   Nuestros servicios
                 </a>
               </div>
-              <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4 text-sm">
-                <p className="font-medium">Tecnologías preferidas:</p>
-                <div className="flex gap-4 text-muted-foreground">
+              <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4 text-sm text-slate-400">
+                <p className="font-medium text-slate-200">Tecnologías preferidas:</p>
+                <div className="flex gap-4">
                   <span>React</span>
                   <span>Next.js</span>
                   <span>Supabase</span>
@@ -129,52 +135,49 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div className="rounded-2xl border border-border bg-card p-8 shadow-lg relative overflow-hidden">
-              <div className="absolute -right-20 -top-20 h-[300px] w-[300px] rounded-full bg-primary/10 blur-3xl"></div>
-              <p className="relative text-sm font-medium uppercase tracking-wider text-muted-foreground">Proyectos destacados</p>
+
+            {/* Featured Projects Card with glassmorphism */}
+            <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-8 shadow-2xl relative overflow-hidden">
+              <div className="absolute -right-20 -top-20 h-[300px] w-[300px] rounded-full bg-primary/20 blur-3xl"></div>
+              <p className="relative text-sm font-medium uppercase tracking-wider text-slate-400">Proyectos destacados</p>
               <ul className="relative mt-6 space-y-5">
                 <li className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-amber-500/10">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-amber-500/20">
                     <Globe className="h-5 w-5 text-amber-500" />
                   </div>
                   <div>
-                    <p className="font-medium">Maps</p>
-                    <p className="text-sm text-muted-foreground">Servicio de mapas y geolocalización</p>
+                    <p className="font-medium text-white">Maps</p>
+                    <p className="text-sm text-slate-400">Servicio de mapas y geolocalización</p>
                   </div>
                 </li>
                 <li className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-500/10">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-500/20">
                     <Database className="h-5 w-5 text-blue-500" />
                   </div>
                   <div>
-                    <p className="font-medium">ContaPro</p>
-                    <p className="text-sm text-muted-foreground">Software contable en la nube</p>
+                    <p className="font-medium text-white">ContaPro</p>
+                    <p className="text-sm text-slate-400">Software contable en la nube</p>
                   </div>
                 </li>
                 <li className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-500/10">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-500/20">
                     <Server className="h-5 w-5 text-red-500" />
                   </div>
                   <div>
-                    <p className="font-medium">Logitrack</p>
-                    <p className="text-sm text-muted-foreground">Rastreo y optimización de flotas</p>
+                    <p className="font-medium text-white">Logitrack</p>
+                    <p className="text-sm text-slate-400">Rastreo y optimización de flotas</p>
                   </div>
                 </li>
               </ul>
               <div className="relative mt-8">
                 <Link
                   href="https://maps.puntocero.dev"
-                  className="inline-flex items-center text-sm font-medium text-primary hover:underline"
+                  className="inline-flex items-center text-sm font-medium text-primary hover:text-primary/80 transition-colors"
                 >
                   Ver demostración en vivo
                   <ArrowRight className="ml-1 h-4 w-4" />
                 </Link>
               </div>
-            </div>
-            
-            {/* LensFlare 3D Scene */}
-            <div className="md:h-[600px] h-[400px] w-full relative flex items-center justify-center">
-              <LensFlareHero />
             </div>
           </div>
         </div>
